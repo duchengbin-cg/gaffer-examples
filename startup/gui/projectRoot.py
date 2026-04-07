@@ -3,6 +3,12 @@ import os
 import Gaffer
 import GafferUI
 
+# 可选依赖：某些环境下没有 Arnold 插件。为避免 UI startup 脚本整体崩溃，必须保护性导入。
+try:
+    import GafferArnold  # noqa: F401
+except Exception:
+    pass
+
 # 最稳健的“延迟注入”方案：
 # 不在脚本顶层尝试获取 Application；而是等 ScriptWindow 真正创建后，
 # 再对对应的 ScriptNode 注入 project:root，并绑定 fileNameChangedSignal()。
@@ -57,7 +63,12 @@ def __installForScript(script):
     __updateProjectRoot(script)
 
     # 后续 Save As / 改名，也要跟随更新
-    script.fileNameChangedSignal().connect(lambda s: __updateProjectRoot(s))
+    # 适配不同版本的信号名：
+    # - Gaffer 1.6 常用 pathChangedSignal()
+    # - 部分旧环境可能仍为 fileNameChangedSignal()
+    signal = getattr(script, "pathChangedSignal", getattr(script, "fileNameChangedSignal", None))
+    if signal:
+        signal().connect(lambda s: __updateProjectRoot(s))
 
 
 def __onScriptWindowCreated(scriptWindow):
