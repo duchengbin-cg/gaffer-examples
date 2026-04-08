@@ -1579,9 +1579,10 @@ __children["LDTToolBox"].addChild( Gaffer.Reference( "LDTLightCreator" ) )
 __children["LDTToolBox"]["LDTLightCreator"].load( "LDTLightCreator.grf" )
 __children["LDTToolBox"]["LDTLightCreator"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTToolBox"].addChild( Gaffer.Reference( "LDTRenderSceneQuality" ) )
-# Windows / cross-platform:
-# Load via LDTGaffer root variable instead of relying on GAFFER_REFERENCE_PATHS search.
-__children["LDTToolBox"]["LDTRenderSceneQuality"].load( "${LDTGaffer}/resources/boxes/LDTRenderSceneQuality.grf" )
+# NOTE:
+# `Reference.load()` does not expand `${...}` style variables in the string argument.
+# So we rely on `GAFFER_REFERENCE_PATHS` and load by filename.
+__children["LDTToolBox"]["LDTRenderSceneQuality"].load( "LDTRenderSceneQuality.grf" )
 __children["LDTToolBox"]["LDTRenderSceneQuality"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTToolBox"].addChild( Gaffer.Box( "LDTRenderLayer" ) )
 __children["LDTToolBox"]["LDTRenderLayer"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )

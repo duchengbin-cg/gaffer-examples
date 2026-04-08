@@ -506,7 +506,9 @@ __children["LDTToolBox"].addChild( Gaffer.Reference( "Reference" ) )
 __children["LDTToolBox"]["Reference"].load( "LDTBatchRender.grf" )
 __children["LDTToolBox"]["Reference"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTToolBox"].addChild( Gaffer.Reference( "LDTRenderFiltersIPR" ) )
-__children["LDTToolBox"]["LDTRenderFiltersIPR"].load( "${LDTGaffer}/resources/boxes/LDTRenderFilters.grf" )
+# NOTE: `Reference.load()` does not expand `${...}` style variables in the string argument.
+# Rely on `GAFFER_REFERENCE_PATHS` and load by filename.
+__children["LDTToolBox"]["LDTRenderFiltersIPR"].load( "LDTRenderFilters.grf" )
 __children["LDTToolBox"]["LDTRenderFiltersIPR"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTToolBox"].addChild( Gaffer.EditScope( "LDTContextEnabledEditScope" ) )
 __children["LDTToolBox"]["LDTContextEnabledEditScope"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
@@ -5751,11 +5753,11 @@ __children["shot_0001"]["ArnoldSurfaceEdits"]["edits"].addColumn( Gaffer.TweakPl
 __children["shot_0001"]["ArnoldSurfaceEdits"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTRenderFiltersIPR"] = Gaffer.Reference( "LDTRenderFiltersIPR" )
 parent.addChild( __children["LDTRenderFiltersIPR"] )
-__children["LDTRenderFiltersIPR"].load( "${LDTGaffer}/resources/boxes/LDTRenderFilters.grf" )
+__children["LDTRenderFiltersIPR"].load( "LDTRenderFilters.grf" )
 __children["LDTRenderFiltersIPR"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["LDTRenderFilters_Batch"] = Gaffer.Reference( "LDTRenderFilters_Batch" )
 parent.addChild( __children["LDTRenderFilters_Batch"] )
-__children["LDTRenderFilters_Batch"].load( "${LDTGaffer}/resources/boxes/LDTRenderFilters.grf" )
+__children["LDTRenderFilters_Batch"].load( "LDTRenderFilters.grf" )
 __children["LDTRenderFilters_Batch"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
 __children["seq0002"] = Gaffer.EditScope( "seq0002" )
 parent.addChild( __children["seq0002"] )
@@ -24999,4 +25001,3 @@ __children["seq0001"]["Expression"]["__expression"].setValue( 'import IECore\n\n
 
 
 del __children
-
